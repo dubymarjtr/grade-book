@@ -8,6 +8,7 @@ app.get("/", (_, res) => {
   res.send("Hello World!");
 });
 
+app.use(express.json());
 app.use("/api", router);
 
 app.listen(config.port, () => {
