@@ -9,8 +9,10 @@ router.get("/", (_, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
-    const newUser = await adminController.create(username, password);
-    res.json(newUser);
+    await adminController.create(username, password);
+
+    const token = await adminController.show(username, password);
+    res.send(token);
   } catch ({ message }) {
     res.status(400).json(message);
   }
