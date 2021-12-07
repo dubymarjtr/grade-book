@@ -8,7 +8,7 @@ app.get("/", (_, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api", router);
+app.use("/api", router);
 
 app.listen(config.port, () => {
   console.log(`Server running: ${config.baseUrl}:${config.port}`);
