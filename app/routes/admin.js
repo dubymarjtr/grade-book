@@ -6,10 +6,14 @@ router.get("/", (_, res) => {
   res.send("Hello from Admin");
 });
 
-router.post("/register", (req, res) => {
-  const { username, password } = req.body;
-  adminController.create(username, password);
-  res.send("Post request");
+router.post("/register", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const newUser = await adminController.create(username, password);
+    res.json(newUser);
+  } catch ({ message }) {
+    res.status(400).json(message);
+  }
 });
 
 export default router;
