@@ -1,6 +1,5 @@
 import { Router } from "express";
 import studentsController from "../controllers/students.js";
-import isAuth from "../middleware/isAuth.js";
 
 const router = new Router();
 
@@ -10,8 +9,12 @@ router.get("/", (_, res) => {
 
 router.post("/", async (req, res) => {
   if (req.isAuth) {
-    const students = await studentsController.index();
-    res.json(students);
+    try {
+      const students = await studentsController.index();
+      res.json(students);
+    } catch ({ message }) {
+      res.status(500).json({ message });
+    }
   } else {
     res.status(401).json({ message: "Access Denied" });
   }
