@@ -21,7 +21,7 @@ export default {
     return admin.insertOne({ username, password: hashedPassword, role });
   },
 
-  async show(username, password) {
+  async show({ username, password }) {
     const user = await admin.findOne({ username });
 
     if (!user) {
@@ -35,7 +35,7 @@ export default {
       throw new Error("Login unsuccessful");
     }
 
-    return jwt.sign({ username }, config.encryption.secret, {
+    return jwt.sign({ username, role: user.role }, config.encryption.secret, {
       expiresIn: config.encryption.expiresIn,
     });
   },
