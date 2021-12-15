@@ -1,5 +1,6 @@
 import { Router } from "express";
 import adminController from "../controllers/admin.js";
+import Admin from "../models/users/Admin.js";
 const router = new Router();
 
 router.get("/", (_, res) => {
@@ -8,6 +9,7 @@ router.get("/", (_, res) => {
 
 router.post("/register", async (req, res) => {
   try {
+    const admin = new Admin(req.body);
     const { username, password } = req.body;
     await adminController.create(username, password);
 
