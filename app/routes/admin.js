@@ -10,8 +10,13 @@ router.get("/", (_, res) => {
 router.post("/register", async (req, res) => {
   try {
     const admin = new Admin(req.body);
-    const { username, password } = req.body;
-    await adminController.create(username, password);
+    const errors = admin.validate();
+
+    if (errors.length) {
+      throw new Error(errors.join("\n"));
+    }
+
+    await adminController.create(admin);
 
     const token = await adminController.show(username, password);
     res.send(token);
