@@ -6,7 +6,7 @@ import config from "../config.js";
 const admin = client.db(config.db.name).collection("admin");
 
 export default {
-  async create(username, password) {
+  async create({ username, password, role }) {
     const existingUser = await admin.findOne({ username });
 
     // Check if user already exists
@@ -18,7 +18,7 @@ export default {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user and insert into database
-    return admin.insertOne({ username, password: hashedPassword });
+    return admin.insertOne({ username, password: hashedPassword, role });
   },
 
   async show(username, password) {
