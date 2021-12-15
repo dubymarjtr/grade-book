@@ -8,6 +8,9 @@ export default {
   index() {
     return students.find().toArray();
   },
+  show(id) {
+    return students.findOne({ _id: objectId(id) });
+  },
   async update(id, grade) {
     const studentQuery = {
       _id: objectId(id),
